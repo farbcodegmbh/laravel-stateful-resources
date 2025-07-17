@@ -2,9 +2,14 @@
 
 namespace Farbcode\StatefulResources;
 
-use Farbcode\StatefulResources\Enums\ResourceState;
+use Farbcode\StatefulResources\Contracts\ResourceState;
 use Illuminate\Support\Facades\Context;
 
+/**
+ * Builder for creating resource instances with a specific state.
+ *
+ * @internal
+ */
 class Builder
 {
     private string $resourceClass;

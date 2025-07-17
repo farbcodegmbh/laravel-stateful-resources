@@ -2,7 +2,8 @@
 
 namespace Farbcode\StatefulResources\Concerns;
 
-use Farbcode\StatefulResources\Enums\ResourceState;
+use Farbcode\StatefulResources\Contracts\ResourceState;
+use Farbcode\StatefulResources\StateRegistry;
 use Illuminate\Http\Resources\ConditionallyLoadsAttributes;
 use Illuminate\Http\Resources\MergeValue;
 use Illuminate\Http\Resources\MissingValue;
@@ -155,7 +156,12 @@ trait StatefullyLoadsAttributes
                     continue;
                 }
 
-                return $this->{$singleStateMethod}(ResourceState::from($state), ...$parameters);
+                $stateInstance = StateRegistry::tryFrom($state);
+                if ($stateInstance === null) {
+                    continue;
+                }
+
+                return $this->{$singleStateMethod}($stateInstance, ...$parameters);
             }
         }
 
