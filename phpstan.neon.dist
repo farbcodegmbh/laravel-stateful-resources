@@ -9,5 +9,3 @@ parameters:
     tmpDir: build/phpstan
     checkOctaneCompatibility: true
     checkModelProperties: true
-    ignoreErrors:
-        - '#outside of the config directory which returns null when the config is cached#'
