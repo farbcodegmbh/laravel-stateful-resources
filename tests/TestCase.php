@@ -3,12 +3,14 @@
 namespace Farbcode\StatefulResources\Tests;
 
 use Farbcode\StatefulResources\StatefulResourcesServiceProvider;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Workbench\App\Enums\CustomResourceStates;
 
 class TestCase extends Orchestra
 {
-    use WithWorkbench;
+    use RefreshDatabase, WithWorkbench;
 
     protected $loadEnvironmentVariables = false;
 
@@ -26,7 +28,9 @@ class TestCase extends Orchestra
 
     protected function getEnvironmentSetUp($app)
     {
-        //
+        $app['config']->set('stateful-resources.custom_states', [
+            CustomResourceStates::class,
+        ]);
     }
 
     /**
