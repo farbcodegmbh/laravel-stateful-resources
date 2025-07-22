@@ -17,6 +17,9 @@ class StatefulResourcesServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('stateful-resources')
+            ->hasCommands([
+                Console\Commands\StatefulResourceMakeCommand::class,
+            ])
             ->hasConfigFile();
     }
 
