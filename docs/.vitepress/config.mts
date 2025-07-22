@@ -37,8 +37,15 @@ export default defineConfig({
                 text: 'Basics',
                 items: [
                     { text: 'Installation', link: '/installation' },
+                    { text: 'Basic Usage', link: '/basic-usage' },
                 ]
             },
+            {
+                text: 'Advanced Usage',
+                items: [
+                    { text: 'Extending States', link: '/extending-states' }
+                ]
+            }
         ],
 
         socialLinks: [
