@@ -5,8 +5,6 @@ namespace Farbcode\StatefulResources\Concerns;
 use Farbcode\StatefulResources\Contracts\ResourceState;
 use Farbcode\StatefulResources\StateRegistry;
 use Illuminate\Http\Resources\ConditionallyLoadsAttributes;
-use Illuminate\Http\Resources\MergeValue;
-use Illuminate\Http\Resources\MissingValue;
 
 /**
  * @see \Illuminate\Http\Resources\ConditionallyLoadsAttributes
