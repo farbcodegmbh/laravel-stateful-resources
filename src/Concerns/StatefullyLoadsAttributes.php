@@ -156,7 +156,8 @@ trait StatefullyLoadsAttributes
                     continue;
                 }
 
-                $stateInstance = StateRegistry::tryFrom($state);
+                $stateInstance = app(StateRegistry::class)->tryFrom($state);
+
                 if ($stateInstance === null) {
                     continue;
                 }

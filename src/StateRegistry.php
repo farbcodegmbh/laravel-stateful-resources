@@ -10,26 +10,29 @@ use InvalidArgumentException;
  */
 class StateRegistry
 {
-    private static array $stateClasses = [];
+    /**
+     * @var array<string, ResourceState>
+     */
+    private array $stateClasses = [];
 
     /**
      * Register a state enum class.
      */
-    public static function register(string $stateClass): void
+    public function register(string $stateClass): void
     {
         if (! is_subclass_of($stateClass, ResourceState::class)) {
-            throw new InvalidArgumentException("State class {$stateClass} must implement the ResourceState interface.");
+            throw new InvalidArgumentException("State class {$stateClass} must be a valid ResourceState enum.");
         }
 
-        self::$stateClasses[] = $stateClass;
+        $this->stateClasses[] = $stateClass;
     }
 
     /**
      * Try to find a state by value across all registered state classes.
      */
-    public static function tryFrom(string $value): ?ResourceState
+    public function tryFrom(string $value): ?ResourceState
     {
-        foreach (self::$stateClasses as $stateClass) {
+        foreach ($this->stateClasses as $stateClass) {
             $state = $stateClass::tryFrom($value);
             if ($state !== null) {
                 return $state;
@@ -42,9 +45,9 @@ class StateRegistry
     /**
      * Find a state by value across all registered state classes.
      */
-    public static function from(string $value): ResourceState
+    public function from(string $value): ResourceState
     {
-        $state = self::tryFrom($value);
+        $state = $this->tryFrom($value);
 
         if ($state === null) {
             throw new InvalidArgumentException("Unknown state: {$value}");
@@ -56,10 +59,10 @@ class StateRegistry
     /**
      * Get all available states from all registered classes.
      */
-    public static function all(): array
+    public function all(): array
     {
         $states = [];
-        foreach (self::$stateClasses as $stateClass) {
+        foreach ($this->stateClasses as $stateClass) {
             $states = array_merge($states, $stateClass::cases());
         }
 
@@ -69,8 +72,8 @@ class StateRegistry
     /**
      * Clear all registered state classes.
      */
-    public static function clear(): void
+    public function clear(): void
     {
-        self::$stateClasses = [];
+        $this->stateClasses = [];
     }
 }

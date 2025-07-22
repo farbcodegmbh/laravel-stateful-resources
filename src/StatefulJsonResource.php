@@ -57,7 +57,7 @@ abstract class StatefulJsonResource extends JsonResource
      */
     public static function __callStatic($method, $parameters)
     {
-        $state = StateRegistry::tryFrom($method);
+        $state = app(StateRegistry::class)->tryFrom($method);
 
         if ($state === null) {
             return parent::__callStatic($method, $parameters);
