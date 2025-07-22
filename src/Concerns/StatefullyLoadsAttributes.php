@@ -10,19 +10,6 @@ use Illuminate\Http\Resources\MissingValue;
 
 /**
  * @see \Illuminate\Http\Resources\ConditionallyLoadsAttributes
- *
- * @method MissingValue|mixed whenStateMinimal(mixed $value, mixed $default = null)
- * @method MissingValue|mixed unlessStateMinimal(mixed $value, mixed $default = null)
- * @method MissingValue|mixed whenStateFull(mixed $value, mixed $default = null)
- * @method MissingValue|mixed unlessStateFull(mixed $value, mixed $default = null)
- * @method MissingValue|mixed whenStateTable(mixed $value, mixed $default = null)
- * @method MissingValue|mixed unlessStateTable(mixed $value, mixed $default = null)
- * @method MergeValue|mixed mergeWhenStateMinimal(mixed $value, mixed $default = null)
- * @method MergeValue|mixed mergeUnlessStateMinimal(mixed $value, mixed $default = null)
- * @method MergeValue|mixed mergeWhenStateFull(mixed $value, mixed $default = null)
- * @method MergeValue|mixed mergeUnlessStateFull(mixed $value, mixed $default = null)
- * @method MissingValue|mixed whenStateTable(mixed $value, mixed $default = null)
- * @method MissingValue|mixed unlessStateTable(mixed $value, mixed $default = null)
  */
 trait StatefullyLoadsAttributes
 {

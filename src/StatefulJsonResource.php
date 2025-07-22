@@ -7,11 +7,6 @@ use Farbcode\StatefulResources\Contracts\ResourceState;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Context;
 
-/**
- * @method static \Farbcode\StatefulResources\Builder minimal()
- * @method static \Farbcode\StatefulResources\Builder table()
- * @method static \Farbcode\StatefulResources\Builder full()
- */
 abstract class StatefulJsonResource extends JsonResource
 {
     use StatefullyLoadsAttributes;
