@@ -2,6 +2,7 @@
 
 namespace Farbcode\StatefulResources;
 
+use Farbcode\StatefulResources\Concerns\ResolvesState;
 use Farbcode\StatefulResources\Contracts\ResourceState;
 use Illuminate\Support\Facades\Context;
 
@@ -12,14 +13,24 @@ use Illuminate\Support\Facades\Context;
  */
 class Builder
 {
+    use ResolvesState;
+
     private string $resourceClass;
 
-    private ResourceState $state;
+    private string $state;
 
-    public function __construct(string $resourceClass, ResourceState $state)
+    public function __construct(string $resourceClass, string|ResourceState $state)
     {
+        $state = $this->resolveState($state);
+
+        $registeredState = app(StateRegistry::class)->tryFrom($state);
+
+        if ($registeredState === null) {
+            throw new \InvalidArgumentException("State \"{$state}\" is not registered.");
+        }
+
         $this->resourceClass = $resourceClass;
-        $this->state = $state;
+        $this->state = $registeredState;
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace Farbcode\StatefulResources;
 
-use Farbcode\StatefulResources\Enums\Variant;
+use Farbcode\StatefulResources\Contracts\ResourceState;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -22,15 +22,16 @@ class StatefulResourcesServiceProvider extends PackageServiceProvider
 
     public function bootingPackage(): void
     {
-        $customStates = config()->array('stateful-resources.custom_states');
+        $states = config()->array('stateful-resources.states');
 
-        $this->app->singleton(StateRegistry::class, function () use ($customStates) {
+        $this->app->singleton(StateRegistry::class, function () use ($states) {
             $registry = new StateRegistry;
 
-            $registry->register(Variant::class);
-
-            foreach ($customStates as $stateClass) {
-                $registry->register($stateClass);
+            foreach ($states as $state) {
+                if ($state instanceof ResourceState) {
+                    $state = $state->value;
+                }
+                $registry->register($state);
             }
 
             return $registry;

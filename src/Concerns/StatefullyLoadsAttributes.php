@@ -26,18 +26,20 @@ use Illuminate\Http\Resources\MissingValue;
  */
 trait StatefullyLoadsAttributes
 {
-    use ConditionallyLoadsAttributes;
+    use ConditionallyLoadsAttributes, ResolvesState;
 
     /**
      * Retrieve a value if the current state matches the given state.
      *
-     * @param  ResourceState  $state
+     * @param  string|ResourceState  $state
      * @param  mixed  $value
      * @param  mixed  $default
      * @return \Illuminate\Http\Resources\MissingValue|mixed
      */
     protected function whenState($state, $value, $default = null)
     {
+        $state = $this->resolveState($state);
+
         if (func_num_args() === 3) {
             return $this->when($this->getState() === $state, $value, $default);
         }
@@ -48,13 +50,15 @@ trait StatefullyLoadsAttributes
     /**
      * Retrieve a value unless the current state matches the given state.
      *
-     * @param  ResourceState  $state
+     * @param  string|ResourceState  $state
      * @param  mixed  $value
      * @param  mixed  $default
      * @return \Illuminate\Http\Resources\MissingValue|mixed
      */
     protected function unlessState($state, $value, $default = null)
     {
+        $state = $this->resolveState($state);
+
         if (func_num_args() === 3) {
             return $this->unless($this->getState() === $state, $value, $default);
         }
@@ -65,13 +69,15 @@ trait StatefullyLoadsAttributes
     /**
      * Retrieve a value if the current state is one of the given states.
      *
-     * @param  array<ResourceState>  $states
+     * @param  array<string|ResourceState>  $states
      * @param  mixed  $value
      * @param  mixed  $default
      * @return \Illuminate\Http\Resources\MissingValue|mixed
      */
     protected function whenStateIn(array $states, $value, $default = null)
     {
+        $states = array_map(fn ($state) => $this->resolveState($state), $states);
+
         $condition = in_array($this->getState(), $states, true);
 
         if (func_num_args() === 3) {
@@ -84,13 +90,15 @@ trait StatefullyLoadsAttributes
     /**
      * Retrieve a value unless the current state is one of the given states.
      *
-     * @param  array<ResourceState>  $states
+     * @param  array<string|ResourceState>  $states
      * @param  mixed  $value
      * @param  mixed  $default
      * @return \Illuminate\Http\Resources\MissingValue|mixed
      */
     protected function unlessStateIn(array $states, $value, $default = null)
     {
+        $states = array_map(fn ($state) => $this->resolveState($state), $states);
+
         $condition = in_array($this->getState(), $states, true);
 
         if (func_num_args() === 3) {
@@ -103,13 +111,15 @@ trait StatefullyLoadsAttributes
     /**
      * Merge a value if the current state matches the given state.
      *
-     * @param  ResourceState  $state
+     * @param  string|ResourceState  $state
      * @param  mixed  $value
      * @param  mixed  $default
      * @return \Illuminate\Http\Resources\MergeValue|mixed
      */
     protected function mergeWhenState($state, $value, $default = null)
     {
+        $state = $this->resolveState($state);
+
         if (func_num_args() === 3) {
             return $this->mergeWhen($this->getState() === $state, $value, $default);
         }
@@ -120,13 +130,15 @@ trait StatefullyLoadsAttributes
     /**
      * Merge a value unless the current state matches the given state.
      *
-     * @param  ResourceState  $state
+     * @param  string|ResourceState  $state
      * @param  mixed  $value
      * @param  mixed  $default
      * @return \Illuminate\Http\Resources\MergeValue|mixed
      */
     protected function mergeUnlessState($state, $value, $default = null)
     {
+        $state = $this->resolveState($state);
+
         if (func_num_args() === 3) {
             return $this->mergeUnless($this->getState() === $state, $value, $default);
         }
@@ -138,7 +150,7 @@ trait StatefullyLoadsAttributes
      * Get the current state of the resource.
      * This method should be implemented by the class using this trait.
      */
-    abstract protected function getState(): ResourceState;
+    abstract protected function getState(): string;
 
     public function __call($method, $parameters)
     {

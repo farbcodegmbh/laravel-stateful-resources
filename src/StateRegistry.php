@@ -11,69 +11,67 @@ use InvalidArgumentException;
 class StateRegistry
 {
     /**
-     * @var array<string, ResourceState>
+     * @var string[] List of registered states.
      */
-    private array $stateClasses = [];
+    private array $states = [];
 
     /**
-     * Register a state enum class.
+     * Register a state.
      */
-    public function register(string $stateClass): void
+    public function register(string $state): void
     {
-        if (! is_subclass_of($stateClass, ResourceState::class)) {
-            throw new InvalidArgumentException("State class {$stateClass} must be a valid ResourceState enum.");
-        }
-
-        $this->stateClasses[] = $stateClass;
+        $this->states[] = $state;
     }
 
     /**
-     * Try to find a state by value across all registered state classes.
+     * Try to find a state by value across all registered states.
      */
-    public function tryFrom(string $value): ?ResourceState
+    public function tryFrom(string $value): ?string
     {
-        foreach ($this->stateClasses as $stateClass) {
-            $state = $stateClass::tryFrom($value);
-            if ($state !== null) {
-                return $state;
-            }
+        if (in_array($value, $this->states, true)) {
+            return $value;
         }
 
         return null;
     }
 
     /**
-     * Find a state by value across all registered state classes.
-     */
-    public function from(string $value): ResourceState
-    {
-        $state = $this->tryFrom($value);
-
-        if ($state === null) {
-            throw new InvalidArgumentException("Unknown state: {$value}");
-        }
-
-        return $state;
-    }
-
-    /**
-     * Get all available states from all registered classes.
+     * Get all available states from all registered states.
+     *
+     * @return string[] List of states.
      */
     public function all(): array
     {
-        $states = [];
-        foreach ($this->stateClasses as $stateClass) {
-            $states = array_merge($states, $stateClass::cases());
-        }
-
-        return $states;
+        return $this->states;
     }
 
     /**
-     * Clear all registered state classes.
+     * Clear all registered states.
      */
     public function clear(): void
     {
-        $this->stateClasses = [];
+        $this->states = [];
+    }
+
+    public function getDefaultState(): string
+    {
+        $explicitDefault = config('stateful-resources.default_state');
+
+        if ($explicitDefault instanceof ResourceState) {
+            $explicitDefault = $explicitDefault->value;
+        }
+
+        if ($explicitDefault !== null) {
+            $state = $this->tryFrom($explicitDefault);
+            if ($state !== null) {
+                return $state;
+            }
+        }
+
+        if (empty($this->states)) {
+            throw new InvalidArgumentException('No states registered in the StateRegistry.');
+        }
+
+        return $this->states[0];
     }
 }

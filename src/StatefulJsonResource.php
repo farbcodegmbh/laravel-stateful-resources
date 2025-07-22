@@ -4,7 +4,6 @@ namespace Farbcode\StatefulResources;
 
 use Farbcode\StatefulResources\Concerns\StatefullyLoadsAttributes;
 use Farbcode\StatefulResources\Contracts\ResourceState;
-use Farbcode\StatefulResources\Enums\Variant;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Context;
 
@@ -17,12 +16,12 @@ abstract class StatefulJsonResource extends JsonResource
 {
     use StatefullyLoadsAttributes;
 
-    private ResourceState $state;
+    private string $state;
 
     /**
      * Create a new stateful resource builder with a specific state.
      */
-    public static function state(ResourceState $state): Builder
+    public static function state(string|ResourceState $state): Builder
     {
         return new Builder(static::class, $state);
     }
@@ -30,7 +29,7 @@ abstract class StatefulJsonResource extends JsonResource
     /**
      * Retrieve the state of the stateful resource.
      */
-    protected function getState(): ResourceState
+    protected function getState(): string
     {
         return $this->state;
     }
@@ -42,7 +41,9 @@ abstract class StatefulJsonResource extends JsonResource
      */
     public function __construct($resource)
     {
-        $this->state = Context::get('resource-state-'.static::class, Variant::Full);
+        $defaultState = app(StateRegistry::class)->getDefaultState();
+
+        $this->state = Context::get('resource-state-'.static::class, $defaultState);
         parent::__construct($resource);
     }
 

@@ -1,17 +1,31 @@
 <?php
 
+use Farbcode\StatefulResources\Enums\Variant;
+
 return [
     /*
     |--------------------------------------------------------------------------
-    | Custom States
+    | States
     |--------------------------------------------------------------------------
     |
-    | Below you may register custom resource states that you want to use inside
-    | your stateful resources. Each state must be a valid enum class that
-    | implements the ResourceState interface.
+    | Below you may register the resource states that you want to use inside
+    | your stateful resources. These can be instances of a ResourceState
+    | or simple strings.
     |
     */
-    'custom_states' => [
-        // App\Enums\CustomResourceState::class,
+    'states' => [
+        ...Variant::cases(),
+        //
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default State
+    |--------------------------------------------------------------------------
+    |
+    | This state will be used when no state is explicitly set on the resource.
+    | If not set, the first state in the states array will be used.
+    |
+    */
+    'default_state' => Variant::Full,
 ];
