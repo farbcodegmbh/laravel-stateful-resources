@@ -2,7 +2,6 @@
 
 namespace Farbcode\StatefulResources;
 
-use Farbcode\StatefulResources\Enums\Variant;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -17,6 +16,9 @@ class StatefulResourcesServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('stateful-resources')
+            ->hasCommands([
+                Console\Commands\StatefulResourceMakeCommand::class,
+            ])
             ->hasConfigFile();
     }
 
@@ -27,7 +29,7 @@ class StatefulResourcesServiceProvider extends PackageServiceProvider
         $this->app->singleton(StateRegistry::class, function () use ($customStates) {
             $registry = new StateRegistry;
 
-            $registry->register(Variant::class);
+            $registry->register(Enums\Variant::class);
 
             foreach ($customStates as $stateClass) {
                 $registry->register($stateClass);
