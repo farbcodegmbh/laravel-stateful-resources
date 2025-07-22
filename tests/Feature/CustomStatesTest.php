@@ -27,6 +27,6 @@ it('cannot use an unregistered state', function () {
     /** @var TestCase $this */
     $cat = Cat::firstOrFail();
 
-    expect(fn() => CatResource::state('non_existent')->make($cat)->toJson())
+    expect(fn () => CatResource::state('non_existent')->make($cat)->toJson())
         ->toThrow(InvalidArgumentException::class, 'State "non_existent" is not registered.');
 });

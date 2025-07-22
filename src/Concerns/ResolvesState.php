@@ -7,7 +7,7 @@ use Farbcode\StatefulResources\StateRegistry;
 
 trait ResolvesState
 {
-     /**
+    /**
      * Resolve the value of a given state.
      *
      * @throws \InvalidArgumentException

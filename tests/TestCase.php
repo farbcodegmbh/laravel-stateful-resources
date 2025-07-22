@@ -7,7 +7,6 @@ use Farbcode\StatefulResources\StatefulResourcesServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Workbench\App\Enums\CustomResourceStates;
 
 class TestCase extends Orchestra
 {
@@ -31,7 +30,7 @@ class TestCase extends Orchestra
     {
         $app['config']->set('stateful-resources.states', [
             ...Variant::cases(),
-            'custom'
+            'custom',
         ]);
     }
 
