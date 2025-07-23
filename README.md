@@ -16,7 +16,7 @@ A Laravel package for managing state in API resources.
 
 ## Documentation
 
-Check out the [official documentation website](#). // TODO
+Check out the [official documentation website](https://stateful-resources.farbcode.net).
 
 ## Changelog
 
