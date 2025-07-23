@@ -133,6 +133,16 @@ You can also use magic methods with for cleaner syntax:
 'name' => $this->unlessStateMinimal($this->full_name),
 ```
 
+### Manual State Access
+
+If you need more complex logic than inline conditionals, you can access the resource's current state directly using the `getState()` method:
+
+```php
+if ($this->getState() === 'full') {
+    // Do something specific for the full state
+}
+```
+
 ## Using Stateful Resources
 
 ### Setting the State Explicitly
