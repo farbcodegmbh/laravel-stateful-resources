@@ -1,6 +1,6 @@
 # Extending States
 
-You may find yourself being too limited with the three Variant states included in the package's `Variant` enum.
+You may find yourself being too limited with the three State states included in the package's `State` enum.
 This package allows you to register custom states that you can then use in your resources.
 
 ## Registering Custom States
@@ -9,10 +9,11 @@ Before using a custom state, register it in the package's `stateful-resources.st
 
 ```php
 <?php
+use Farbcode\StatefulResources\Enums\State;
 
 return [
     'states' => [
-        ...Variant::cases(), // The built-in states
+        ...State::cases(), // The built-in states
         'custom', // Your custom state as a string
         ...CustomResourceState::cases(), // Or as cases of a custom enum
     ],

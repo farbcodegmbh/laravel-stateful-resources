@@ -2,7 +2,7 @@
 
 namespace Farbcode\StatefulResources\Tests;
 
-use Farbcode\StatefulResources\Enums\Variant;
+use Farbcode\StatefulResources\Enums\State;
 use Farbcode\StatefulResources\StatefulResourcesServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\Concerns\WithWorkbench;
@@ -29,7 +29,7 @@ class TestCase extends Orchestra
     protected function getEnvironmentSetUp($app)
     {
         $app['config']->set('stateful-resources.states', [
-            ...Variant::cases(),
+            ...State::cases(),
             'custom',
         ]);
     }

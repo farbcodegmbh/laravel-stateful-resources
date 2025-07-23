@@ -36,7 +36,7 @@ class UserResource extends StatefulJsonResource
 
 ## Built-in States
 
-The package comes with three built-in states defined in the `Variant` enum:
+The package comes with three built-in states defined in the `State` enum:
 
 -   **`Full`** - For all available attributes
 -   **`Table`** - For attributes suitable for table/listing views
@@ -53,7 +53,7 @@ Inside your stateful resource, you can use conditional methods to control which 
 
 namespace App\Http\Resources;
 
-use Farbcode\StatefulResources\Enums\Variant;
+use Farbcode\StatefulResources\Enums\State;
 use Farbcode\StatefulResources\StatefulJsonResource;
 use Illuminate\Http\Request;
 
@@ -64,14 +64,14 @@ class UserResource extends StatefulJsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'email' => $this->whenState(Variant::Full, $this->email),
-            'profile' => $this->whenStateIn([Variant::Full], [
+            'email' => $this->whenState(State::Full, $this->email),
+            'profile' => $this->whenStateIn([State::Full], [
                 'bio' => $this->bio,
                 'avatar' => $this->avatar,
                 'created_at' => $this->created_at,
             ]),
-            'role' => $this->whenStateIn([Variant::Full, Variant::Table], $this->role),
-            'last_login' => $this->unlessState(Variant::Minimal, $this->last_login_at),
+            'role' => $this->whenStateIn([State::Full, State::Table], $this->role),
+            'last_login' => $this->unlessState(State::Minimal, $this->last_login_at),
         ];
     }
 }
@@ -93,8 +93,8 @@ The package provides several methods to conditionally include attributes:
 Include a value only when the current state matches the specified state:
 
 ```php
-'email' => $this->whenState(Variant::Full, $this->email),
-'admin_notes' => $this->whenState(Variant::Full, $this->admin_notes, 'N/A'),
+'email' => $this->whenState(State::Full, $this->email),
+'admin_notes' => $this->whenState(State::Full, $this->admin_notes, 'N/A'),
 ```
 
 ### `unlessState`
@@ -102,7 +102,7 @@ Include a value only when the current state matches the specified state:
 Include a value unless the current state matches the specified state:
 
 ```php
-'public_info' => $this->unlessState(Variant::Minimal, $this->public_information),
+'public_info' => $this->unlessState(State::Minimal, $this->public_information),
 ```
 
 ### `whenStateIn`
@@ -110,7 +110,7 @@ Include a value unless the current state matches the specified state:
 Include a value when the current state is one of the specified states:
 
 ```php
-'detailed_info' => $this->whenStateIn([Variant::Full, Variant::Table], [
+'detailed_info' => $this->whenStateIn([State::Full, State::Table], [
     'department' => $this->department,
     'position' => $this->position,
 ]),
@@ -121,7 +121,7 @@ Include a value when the current state is one of the specified states:
 Include a value unless the current state is one of the specified states:
 
 ```php
-'sensitive_data' => $this->unlessStateIn([Variant::Minimal, Variant::Table], $this->sensitive_info),
+'sensitive_data' => $this->unlessStateIn([State::Minimal, State::Table], $this->sensitive_info),
 ```
 
 ### Magic Conditionals
@@ -140,7 +140,7 @@ You can also use magic methods with for cleaner syntax:
 Use the static `state()` method to create a resource with a specific state:
 
 ```php
-$user = UserResource::state(Variant::Minimal)->make($user);
+$user = UserResource::state(State::Minimal)->make($user);
 ```
 
 ### Using Magic Methods
@@ -148,7 +148,7 @@ $user = UserResource::state(Variant::Minimal)->make($user);
 You can also use magic methods for a more fluent syntax:
 
 ```php
-// This is equivalent to the explicit state() call
+// This is equivalent to the explicit state(State::Minimal) call
 $user = UserResource::minimal()->make($user);
 ```
 

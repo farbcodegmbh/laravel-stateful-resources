@@ -1,6 +1,6 @@
 <?php
 
-use Farbcode\StatefulResources\Enums\Variant;
+use Farbcode\StatefulResources\Enums\State;
 use Farbcode\StatefulResources\Tests\TestCase;
 use Workbench\App\Http\Resources\CatResource;
 use Workbench\App\Models\Cat;
@@ -32,7 +32,7 @@ it('can return a stateful resource with the correct "full" state', function () {
     /** @var TestCase $this */
     $cat = Cat::firstOrFail();
 
-    $resource = CatResource::state(Variant::Full)->make($cat)->toJson();
+    $resource = CatResource::state(State::Full)->make($cat)->toJson();
 
     expect($resource)->toBeJson();
 
@@ -49,7 +49,7 @@ it('can use a stateful resource with the "minimal" state', function () {
     /** @var TestCase $this */
     $cat = Cat::firstOrFail();
 
-    $resource = CatResource::state(Variant::Minimal)->make($cat)->toJson();
+    $resource = CatResource::state(State::Minimal)->make($cat)->toJson();
 
     expect($resource)->toBeJson();
 
@@ -63,7 +63,7 @@ it('can use a stateful resource with the "table" state', function () {
     /** @var TestCase $this */
     $cat = Cat::firstOrFail();
 
-    $resource = CatResource::state(Variant::Table)->make($cat)->toJson();
+    $resource = CatResource::state(State::Table)->make($cat)->toJson();
 
     expect($resource)->toBeJson();
 

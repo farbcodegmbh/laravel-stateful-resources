@@ -1,6 +1,6 @@
 <?php
 
-use Farbcode\StatefulResources\Enums\Variant;
+use Farbcode\StatefulResources\Enums\State;
 
 return [
     /*
@@ -14,7 +14,7 @@ return [
     |
     */
     'states' => [
-        ...Variant::cases(),
+        ...State::cases(),
         //
     ],
 
@@ -27,5 +27,5 @@ return [
     | If not set, the first state in the states array will be used.
     |
     */
-    'default_state' => Variant::Full,
+    'default_state' => State::Full,
 ];

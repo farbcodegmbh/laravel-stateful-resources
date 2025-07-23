@@ -4,7 +4,7 @@ namespace Farbcode\StatefulResources\Enums;
 
 use Farbcode\StatefulResources\Contracts\ResourceState;
 
-enum Variant: string implements ResourceState
+enum State: string implements ResourceState
 {
     case Full = 'full';
     case Table = 'table';
