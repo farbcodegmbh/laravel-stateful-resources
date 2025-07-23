@@ -13,7 +13,7 @@ Install the package via composer:
 composer require farbcode/laravel-stateful-resources
 ```
 
-Publish the config file with:
+Publish the configuration file with:
 
 ```bash
 php artisan vendor:publish --tag="stateful-resources-config"
