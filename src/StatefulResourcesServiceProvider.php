@@ -2,6 +2,7 @@
 
 namespace Farbcode\StatefulResources;
 
+use Farbcode\StatefulResources\Contracts\ResourceState;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -16,6 +17,27 @@ class StatefulResourcesServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('stateful-resources')
+            ->hasCommands([
+                Console\Commands\StatefulResourceMakeCommand::class,
+            ])
             ->hasConfigFile();
+    }
+
+    public function bootingPackage(): void
+    {
+        $states = config()->array('stateful-resources.states');
+
+        $this->app->singleton(StateRegistry::class, function () use ($states) {
+            $registry = new StateRegistry;
+
+            foreach ($states as $state) {
+                if ($state instanceof ResourceState) {
+                    $state = $state->value;
+                }
+                $registry->register($state);
+            }
+
+            return $registry;
+        });
     }
 }
