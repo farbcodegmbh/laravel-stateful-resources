@@ -7,6 +7,10 @@ This package allows you to register custom states that you can then use in your 
 
 Before using a custom state, register it in the package's `stateful-resources.states` configuration:
 
+::: info
+States should either be single words, snake_case, or kebab-case.
+:::
+
 ```php
 <?php
 use Farbcode\StatefulResources\Enums\State;
@@ -35,7 +39,7 @@ enum CustomResourceState: string implements ResourceState
 {
     case Compact = 'compact';
     case Extended = 'extended';
-    case Debug = 'debug';
+    case DebugOnly = 'debug_only';
 }
 ```
 
@@ -59,7 +63,7 @@ class UserResource extends StatefulJsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->whenState(CustomResourceState::Extended, $this->email),
-            'debug_info' => $this->whenStateDebug([
+            'debug_info' => $this->whenStateDebugOnly([
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,
             ]),
@@ -77,4 +81,7 @@ UserResource::state(CustomResourceState::Compact)->make($user);
 
 // Using the magic method (if the state name matches the case name)
 UserResource::compact()->make($user);
+
+// States using snake_case or kebab-case can be called as camelCase
+UserResource::debugOnly()->make($user);
 ```
