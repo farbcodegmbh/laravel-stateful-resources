@@ -2,6 +2,7 @@
 
 namespace Farbcode\StatefulResources;
 
+use Farbcode\StatefulResources\Concerns\ResolvesState;
 use Farbcode\StatefulResources\Concerns\StatefullyLoadsAttributes;
 use Farbcode\StatefulResources\Contracts\ResourceState;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Context;
 
 abstract class StatefulJsonResource extends JsonResource
 {
-    use StatefullyLoadsAttributes;
+    use ResolvesState, StatefullyLoadsAttributes;
 
     private string $state;
 
@@ -53,7 +54,7 @@ abstract class StatefulJsonResource extends JsonResource
      */
     public static function __callStatic($method, $parameters)
     {
-        $state = app(StateRegistry::class)->tryFrom($method);
+        $state = self::resolveStateFromMethodName($method);
 
         if ($state === null) {
             return parent::__callStatic($method, $parameters);

@@ -31,6 +31,8 @@ class TestCase extends Orchestra
         $app['config']->set('stateful-resources.states', [
             ...State::cases(),
             'custom',
+            'snake_custom',
+            'kebab-custom',
         ]);
     }
 

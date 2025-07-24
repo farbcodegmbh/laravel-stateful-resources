@@ -3,7 +3,6 @@
 namespace Farbcode\StatefulResources\Concerns;
 
 use Farbcode\StatefulResources\Contracts\ResourceState;
-use Farbcode\StatefulResources\StateRegistry;
 use Illuminate\Http\Resources\ConditionallyLoadsAttributes;
 
 /**
@@ -148,12 +147,14 @@ trait StatefullyLoadsAttributes
 
         foreach ($singleStateMethods as $singleStateMethod) {
             if (str_starts_with($method, $singleStateMethod)) {
-                $state = strtolower(substr($method, strlen($singleStateMethod)));
+
+                $state = substr($method, strlen($singleStateMethod));
+
                 if (empty($state)) {
                     continue;
                 }
 
-                $stateInstance = app(StateRegistry::class)->tryFrom($state);
+                $stateInstance = $this->resolveStateFromMethodName($state);
 
                 if ($stateInstance === null) {
                     continue;

@@ -22,6 +22,8 @@ class CatResource extends StatefulJsonResource
             'fluffyness' => $this->whenStateIn([State::Full], $this->fluffyness),
             'color' => $this->whenStateIn([State::Full], $this->color),
             'custom_field' => $this->whenState('custom', 'custom_value'),
+            'snake_custom_field' => $this->whenStateSnakeCustom('snake_custom_value'),
+            'kebab_custom_field' => $this->whenStateKebabCustom('kebab_custom_value'),
         ];
     }
 }
