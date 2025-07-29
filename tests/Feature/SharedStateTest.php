@@ -1,6 +1,7 @@
 <?php
 
-use Farbcode\StatefulResources\ActiveState;
+use Farbcode\StatefulResources\ActiveState as ActiveStateService;
+use Farbcode\StatefulResources\Facades\ActiveState;
 use Workbench\App\Http\Resources\CatResource;
 use Workbench\App\Models\Cat;
 use Workbench\App\Models\Dog;
@@ -13,7 +14,42 @@ it('can use shared state from previously called states in other resources', func
 
     $resource = CatResource::state('table')->make($cat)->toJson();
 
-    expect(app(ActiveState::class)->getShared())->toBe('table');
+    expect(app(ActiveStateService::class)->getShared())->toBe('table');
+
+    expect($resource)->toBeJson();
+
+    expect($resource)->json()->toEqual([
+        'id' => $cat->id,
+        'name' => $cat->name,
+        'breed' => $cat->breed,
+        'enemies' => [
+            [
+                'id' => $dogs[0]->id,
+                'name' => $dogs[0]->name,
+            ],
+            [
+                'id' => $dogs[1]->id,
+                'name' => $dogs[1]->name,
+            ],
+            [
+                'id' => $dogs[2]->id,
+                'name' => $dogs[2]->name,
+            ],
+        ],
+    ]);
+});
+
+it('can set the shared state through the ActiveState facade', function () {
+    $cat = Cat::factory()->new()->createOne();
+    $dogs = Dog::factory()->count(3)->create();
+
+    $cat->enemies()->attach($dogs->pluck('id'));
+
+    ActiveState::setShared('table');
+
+    $resource = CatResource::make($cat)->toJson();
+
+    expect(app(ActiveStateService::class)->getShared())->toBe('table');
 
     expect($resource)->toBeJson();
 
@@ -48,7 +84,7 @@ it('works correctly when shared state is disabled', function () {
 
     $resource = CatResource::state('table')->make($cat)->toJson();
 
-    expect(app(ActiveState::class)->getForResource(CatResource::class))->toBe('table');
+    expect(app(ActiveStateService::class)->getForResource(CatResource::class))->toBe('table');
 
     expect($resource)->toBeJson();
 
