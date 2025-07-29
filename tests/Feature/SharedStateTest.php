@@ -1,0 +1,77 @@
+<?php
+
+use Farbcode\StatefulResources\ActiveState;
+use Workbench\App\Http\Resources\CatResource;
+use Workbench\App\Models\Cat;
+use Workbench\App\Models\Dog;
+
+it('can use shared state from previously called states in other resources', function () {
+    $cat = Cat::factory()->new()->createOne();
+    $dogs = Dog::factory()->count(3)->create();
+
+    $cat->enemies()->attach($dogs->pluck('id'));
+
+    $resource = CatResource::state('table')->make($cat)->toJson();
+
+    expect(app(ActiveState::class)->getShared())->toBe('table');
+
+    expect($resource)->toBeJson();
+
+    expect($resource)->json()->toEqual([
+        'id' => $cat->id,
+        'name' => $cat->name,
+        'breed' => $cat->breed,
+        'enemies' => [
+            [
+                'id' => $dogs[0]->id,
+                'name' => $dogs[0]->name,
+            ],
+            [
+                'id' => $dogs[1]->id,
+                'name' => $dogs[1]->name,
+            ],
+            [
+                'id' => $dogs[2]->id,
+                'name' => $dogs[2]->name,
+            ],
+        ],
+    ]);
+});
+
+it('works correctly when shared state is disabled', function () {
+    config()->set('stateful-resources.shared_state', false);
+
+    $cat = Cat::factory()->new()->createOne();
+    $dogs = Dog::factory()->count(3)->create();
+
+    $cat->enemies()->attach($dogs->pluck('id'));
+
+    $resource = CatResource::state('table')->make($cat)->toJson();
+
+    expect(app(ActiveState::class)->getForResource(CatResource::class))->toBe('table');
+
+    expect($resource)->toBeJson();
+
+    expect($resource)->json()->toEqual([
+        'id' => $cat->id,
+        'name' => $cat->name,
+        'breed' => $cat->breed,
+        'enemies' => [
+            [
+                'id' => $dogs[0]->id,
+                'name' => $dogs[0]->name,
+                'breed' => $dogs[0]->breed,
+            ],
+            [
+                'id' => $dogs[1]->id,
+                'name' => $dogs[1]->name,
+                'breed' => $dogs[1]->breed,
+            ],
+            [
+                'id' => $dogs[2]->id,
+                'name' => $dogs[2]->name,
+                'breed' => $dogs[2]->breed,
+            ],
+        ],
+    ]);
+});

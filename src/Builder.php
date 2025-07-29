@@ -4,7 +4,6 @@ namespace Farbcode\StatefulResources;
 
 use Farbcode\StatefulResources\Concerns\ResolvesState;
 use Farbcode\StatefulResources\Contracts\ResourceState;
-use Illuminate\Support\Facades\Context;
 
 /**
  * Builder for creating resource instances with a specific state.
@@ -31,6 +30,8 @@ class Builder
 
         $this->resourceClass = $resourceClass;
         $this->state = $registeredState;
+
+        $this->setActiveState($this->resourceClass, $this->state);
     }
 
     /**
@@ -38,9 +39,7 @@ class Builder
      */
     public function make($resource)
     {
-        return Context::scope(function () use ($resource) {
-            return $this->resourceClass::make($resource);
-        }, ['resource-state-'.$this->resourceClass => $this->state]);
+        return $this->resourceClass::make($resource);
     }
 
     /**
@@ -48,9 +47,7 @@ class Builder
      */
     public function collection($resource)
     {
-        return Context::scope(function () use ($resource) {
-            return $this->resourceClass::collection($resource);
-        }, ['resource-state-'.$this->resourceClass => $this->state]);
+        return $this->resourceClass::collection($resource);
     }
 
     /**

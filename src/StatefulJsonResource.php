@@ -6,7 +6,6 @@ use Farbcode\StatefulResources\Concerns\ResolvesState;
 use Farbcode\StatefulResources\Concerns\StatefullyLoadsAttributes;
 use Farbcode\StatefulResources\Contracts\ResourceState;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Context;
 
 abstract class StatefulJsonResource extends JsonResource
 {
@@ -37,9 +36,7 @@ abstract class StatefulJsonResource extends JsonResource
      */
     public function __construct($resource)
     {
-        $defaultState = app(StateRegistry::class)->getDefaultState();
-
-        $this->state = Context::get('resource-state-'.static::class, $defaultState);
+        $this->state = $this->getActiveState(static::class);
         parent::__construct($resource);
     }
 

@@ -39,5 +39,9 @@ class StatefulResourcesServiceProvider extends PackageServiceProvider
 
             return $registry;
         });
+
+        $this->app->singleton(ActiveState::class, function () {
+            return new ActiveState;
+        });
     }
 }

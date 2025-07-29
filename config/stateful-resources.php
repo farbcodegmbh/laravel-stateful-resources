@@ -28,4 +28,17 @@ return [
     |
     */
     'default_state' => State::Full,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Shared State
+    |--------------------------------------------------------------------------
+    |
+    | Here you can specify whether the stateful resources should use a shared
+    | for the resource state. If set to true, the state will be shared across
+    | all resources. If set to false, the state will be scoped to the
+    | resource instance.
+    |
+    */
+    'shared_state' => true,
 ];
