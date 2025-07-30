@@ -3,7 +3,9 @@
 use Farbcode\StatefulResources\ActiveState as ActiveStateService;
 use Farbcode\StatefulResources\Enums\State;
 use Farbcode\StatefulResources\Facades\ActiveState;
+use Farbcode\StatefulResources\StateRegistry;
 use Workbench\App\Http\Resources\CatResource;
+use Workbench\App\Http\Resources\DogResource;
 use Workbench\App\Models\Cat;
 use Workbench\App\Models\Dog;
 
@@ -81,11 +83,11 @@ it('can set the shared state through the resourceState helper function', functio
 
     $cat->enemies()->attach($dogs->pluck('id'));
 
-    resourceState()->setShared(State::Table);
+    activeResourceState()->setShared(State::Table);
 
     $resource = CatResource::make($cat)->toJson();
 
-    expect(resourceState()->matchesShared(State::Table))->toBeTrue();
+    expect(activeResourceState()->matchesShared(State::Table))->toBeTrue();
 
     expect($resource)->toBeJson();
 
@@ -116,11 +118,11 @@ it('can set the shared state through the resourceState helper function and the g
 
     $cat->enemies()->attach($dogs->pluck('id'));
 
-    resourceState()->set(State::Table);
+    activeResourceState()->set(State::Table);
 
     $resource = CatResource::make($cat)->toJson();
 
-    expect(resourceState()->matches(State::Table))->toBeTrue();
+    expect(activeResourceState()->matches(State::Table))->toBeTrue();
 
     expect($resource)->toBeJson();
 
