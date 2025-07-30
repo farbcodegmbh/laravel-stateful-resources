@@ -44,11 +44,13 @@ class UserResource extends StatefulJsonResource
 }
 ```
 
-## ActiveState Facade
-You may also set the shared state explicitly through the `ActiveState` facade instead:
+## Facade & Helper
+You may also set the shared state explicitly through the `ActiveState` facade or the `activeResourceState` helper function instead:
 
 ```php
 use Farbcode\StatefulResources\Facades\ActiveState;
 
-ActiveState::setShared('minimal');
+ActiveState::set('minimal');
+// or
+activeResourceState()->set('minimal');
 ```
