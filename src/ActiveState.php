@@ -78,10 +78,8 @@ class ActiveState
     /**
      * Get the current state for a resource.
      * If no resource class is provided, returns the shared state.
-     *
-     * @param  string|null  $resourceClass
      */
-    public function get($resourceClass = null): string
+    public function get(?string $resourceClass = null): string
     {
         if ($resourceClass === null) {
             return $this->getShared();
@@ -93,11 +91,8 @@ class ActiveState
     /**
      * Set the current state for a resource.
      * If no resource class is provided, sets the shared state.
-     *
-     * @param  string|ResourceState  $state
-     * @param  string|null  $resourceClass
      */
-    public function set($state, $resourceClass = null): void
+    public function set(string|ResourceState $state, ?string $resourceClass = null): void
     {
         $state = $this->resolveState($state);
 
@@ -111,11 +106,8 @@ class ActiveState
     /**
      * Check if the current state matches the given state for a resource.
      * If no resource class is provided, checks against the shared state.
-     *
-     * @param  string|ResourceState  $state
-     * @param  string|null  $resourceClass
      */
-    public function matches($state, $resourceClass = null): bool
+    public function matches(string|ResourceState $state, ?string $resourceClass = null): bool
     {
         $state = $this->resolveState($state);
 
