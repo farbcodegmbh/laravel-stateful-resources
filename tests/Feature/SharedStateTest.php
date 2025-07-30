@@ -182,3 +182,20 @@ it('works correctly when shared state is disabled', function () {
         ],
     ]);
 });
+
+it('sets the shared state at the correct time when the builder is used', function () {
+    $cat = Cat::factory()->new()->createOne();
+    $dog = Dog::factory()->new()->createOne();
+
+    expect(ActiveState::getShared())->toBe(app(StateRegistry::class)->getDefaultState());
+
+    $builder = CatResource::state('table');
+
+    DogResource::make($dog);
+
+    expect(ActiveState::getShared())->toBe(app(StateRegistry::class)->getDefaultState());
+
+    $builder->make($cat);
+
+    expect(ActiveState::getShared())->toBe('table');
+});
