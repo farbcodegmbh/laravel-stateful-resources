@@ -30,16 +30,16 @@ class Builder
 
         $this->resourceClass = $resourceClass;
         $this->state = $registeredState;
-
-        $this->setActiveState($this->resourceClass, $this->state);
     }
 
     /**
      * Create a single resource instance.
      */
-    public function make($resource)
+    public function make(...$parameters)
     {
-        return $this->resourceClass::make($resource);
+        $this->setActiveState($this->resourceClass, $this->state);
+
+        return $this->resourceClass::make(...$parameters);
     }
 
     /**
@@ -47,6 +47,8 @@ class Builder
      */
     public function collection($resource)
     {
+        $this->setActiveState($this->resourceClass, $this->state);
+
         return $this->resourceClass::collection($resource);
     }
 
