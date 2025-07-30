@@ -14,6 +14,9 @@ class Builder
 {
     use ResolvesState;
 
+    /**
+     * @var class-string<StatefulJsonResource>
+     */
     private string $resourceClass;
 
     private string $state;
