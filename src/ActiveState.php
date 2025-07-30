@@ -44,6 +44,7 @@ class ActiveState
     public function matchesShared(string|ResourceState $state): bool
     {
         $state = $this->resolveState($state);
+
         return $this->getShared() === $state;
     }
 
@@ -70,6 +71,7 @@ class ActiveState
     public function matchesResource(string $resourceClass, string|ResourceState $state): bool
     {
         $state = $this->resolveState($state);
+
         return $this->getForResource($resourceClass) === $state;
     }
 
@@ -77,7 +79,7 @@ class ActiveState
      * Get the current state for a resource.
      * If no resource class is provided, returns the shared state.
      *
-     * @param string|null $resourceClass
+     * @param  string|null  $resourceClass
      */
     public function get($resourceClass = null): string
     {
@@ -92,8 +94,8 @@ class ActiveState
      * Set the current state for a resource.
      * If no resource class is provided, sets the shared state.
      *
-     * @param string|ResourceState $state
-     * @param string|null $resourceClass
+     * @param  string|ResourceState  $state
+     * @param  string|null  $resourceClass
      */
     public function set($state, $resourceClass = null): void
     {
@@ -110,8 +112,8 @@ class ActiveState
      * Check if the current state matches the given state for a resource.
      * If no resource class is provided, checks against the shared state.
      *
-     * @param string|ResourceState $state
-     * @param string|null $resourceClass
+     * @param  string|ResourceState  $state
+     * @param  string|null  $resourceClass
      */
     public function matches($state, $resourceClass = null): bool
     {
