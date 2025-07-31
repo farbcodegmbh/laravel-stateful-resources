@@ -1,13 +1,15 @@
-# Laravel Stateful Resources
+<div align="center">
+<h1> Laravel Stateful Resources </h1>
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/farbcode/laravel-stateful-resources.svg?style=flat-square)](https://packagist.org/packages/farbcode/laravel-stateful-resources)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/farbcodegmbh/laravel-stateful-resources/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/farbcodegmbh/laravel-stateful-resources/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/farbcodegmbh/laravel-stateful-resources/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/farbcodegmbh/laravel-stateful-resources/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/farbcode/laravel-stateful-resources.svg?style=flat-square)](https://packagist.org/packages/farbcode/laravel-stateful-resources)
 
-A Laravel package for managing state in API resources.
+<p>A Laravel package for managing state in API resources.</p>
+</div>
 
-**Features:**
+## Features
 
 - 🧘🏻‍♂️ **Unified Resources:** Provide multiple resource representations through a single resource class.
 - 🏗️ **Built-in States:** Comes with default states for common use cases.
@@ -16,16 +18,33 @@ A Laravel package for managing state in API resources.
 
 ## Documentation
 
-Check out the [official documentation website](https://stateful-resources.farbcode.net).
+All information on how to use this package can be found on our official documentation website.
+
+[→ Read the Docs](https://stateful-resources.farbcode.net)
 
 ## Changelog
 
-See [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+Notable changes to this package are documented in our changelog for every new release.
+
+[→ See what's changed](CHANGELOG.md)
 
 ## Contributing
 
-See [CONTRIBUTING](CONTRIBUTING.md) for details.
+We welcome contributions to this package.
+
+[→ Read our Contribution Guidelines](CONTRIBUTING.md)
+
+[→ Open an Issue](https://github.com/farbcodegmbh/laravel-stateful-resources/issues)
+
+[→ Submit a Pull Request](https://github.com/farbcodegmbh/laravel-stateful-resources/pulls)
 
 ## License
 
 The MIT License (MIT). See [License File](LICENSE.md) for more information.
+
+---
+
+[![farbcode Logo Light](/art/farbcode-logo-light.png#gh-light-mode-only)](https://farbcode.net)
+[![farbcode Logo Dark](/art/farbcode-logo-dark.png#gh-dark-mode-only)](https://farbcode.net)
+
+> Made with ❤️ by [//farbcode](https://farbcode.net).
