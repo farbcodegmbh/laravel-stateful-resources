@@ -46,6 +46,12 @@ export default defineConfig({
                     { text: 'Extending States', link: '/extending-states' },
                     { text: 'State Sharing', link: '/state-sharing' },
                 ]
+            },
+            {
+                text: 'Reference',
+                items: [
+                    { text: 'Available Conditional Methods', link: '/reference/conditional-methods' },
+                ]
             }
         ],
 

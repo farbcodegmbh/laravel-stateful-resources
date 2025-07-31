@@ -84,45 +84,6 @@ You can also use the string representation of states instead of enum cases:
 'name' => $this->unlessState('minimal', $this->full_name),
 ```
 
-## Available Conditional Methods
-
-The package provides several methods to conditionally include attributes:
-
-### `whenState`
-
-Include a value only when the current state matches the specified state:
-
-```php
-'email' => $this->whenState(State::Full, $this->email),
-'admin_notes' => $this->whenState(State::Full, $this->admin_notes, 'N/A'),
-```
-
-### `unlessState`
-
-Include a value unless the current state matches the specified state:
-
-```php
-'public_info' => $this->unlessState(State::Minimal, $this->public_information),
-```
-
-### `whenStateIn`
-
-Include a value when the current state is one of the specified states:
-
-```php
-'detailed_info' => $this->whenStateIn([State::Full, State::Table], [
-    'department' => $this->department,
-    'position' => $this->position,
-]),
-```
-
-### `unlessStateIn`
-
-Include a value unless the current state is one of the specified states:
-
-```php
-'sensitive_data' => $this->unlessStateIn([State::Minimal, State::Table], $this->sensitive_info),
-```
 
 ### Magic Conditionals
 
@@ -132,6 +93,8 @@ You can also use magic methods with for cleaner syntax:
 'email' => $this->whenStateFull($this->email),
 'name' => $this->unlessStateMinimal($this->full_name),
 ```
+
+For a full list of available conditional methods, see the [Available Conditional Methods](reference/conditional-methods.md) reference.
 
 ### Manual State Access
 
