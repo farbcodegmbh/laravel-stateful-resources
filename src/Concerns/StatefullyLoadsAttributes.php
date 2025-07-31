@@ -131,6 +131,48 @@ trait StatefullyLoadsAttributes
     }
 
     /**
+     * Merge a value if the current state is one of the given states.
+     *
+     * @param  array<string|ResourceState>  $states
+     * @param  mixed  $value
+     * @param  mixed  $default
+     * @return \Illuminate\Http\Resources\MergeValue|mixed
+     */
+    protected function mergeWhenStateIn(array $states, $value, $default = null)
+    {
+        $states = array_map(fn ($state) => $this->resolveState($state), $states);
+
+        $condition = in_array($this->getState(), $states, true);
+
+        if (func_num_args() === 3) {
+            return $this->mergeWhen($condition, $value, $default);
+        }
+
+        return $this->mergeWhen($condition, $value);
+    }
+
+    /**
+     * Merge a value unless the current state is one of the given states.
+     *
+     * @param  array<string|ResourceState>  $states
+     * @param  mixed  $value
+     * @param  mixed  $default
+     * @return \Illuminate\Http\Resources\MergeValue|mixed
+     */
+    protected function mergeUnlessStateIn(array $states, $value, $default = null)
+    {
+        $states = array_map(fn ($state) => $this->resolveState($state), $states);
+
+        $condition = in_array($this->getState(), $states, true);
+
+        if (func_num_args() === 3) {
+            return $this->mergeUnless($condition, $value, $default);
+        }
+
+        return $this->mergeUnless($condition, $value);
+    }
+
+    /**
      * Get the current state of the resource.
      * This method should be implemented by the class using this trait.
      */
