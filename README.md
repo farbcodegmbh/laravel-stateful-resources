@@ -11,10 +11,10 @@
 
 ## Features
 
-- 🧘🏻‍♂️ **Unified Resources:** Provide multiple resource representations through a single resource class.
-- 🏗️ **Built-in States:** Comes with default states for common use cases.
-- 🪄 **Magic Methods:** Optional magic methods for a more fluent and expressive syntax.
-- 🛠️ **Hackable:** Extend the package with your own custom states and logic.
+-   🧘🏻‍♂️ **Unified Resources:** Provide multiple resource representations through a single resource class.
+-   🏗️ **Built-in States:** Comes with default states for common use cases.
+-   🪄 **Magic Methods:** Optional magic methods for a more fluent and expressive syntax.
+-   🛠️ **Hackable:** Extend the package with your own custom states and logic.
 
 ## Documentation
 
@@ -44,7 +44,12 @@ The MIT License (MIT). See [License File](LICENSE.md) for more information.
 
 ---
 
-[![farbcode Logo Light](/art/farbcode-logo-light.png#gh-light-mode-only)](https://farbcode.net)
-[![farbcode Logo Dark](/art/farbcode-logo-dark.png#gh-dark-mode-only)](https://farbcode.net)
+<a href="https://farbcode.net" target="_blank">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/farbcodegmbh/laravel-stateful-resources/HEAD/art/farbcode-logo-dark.png">
+        <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/farbcodegmbh/laravel-stateful-resources/HEAD/art/farbcode-logo-light.png">
+        <img alt="farbcode Logo" src="https://raw.githubusercontent.com/farbcodegmbh/laravel-stateful-resources/HEAD/art/farbcode-logo-light.png">
+    </picture>
+</a>
 
 > Made with ❤️ by [//farbcode](https://farbcode.net).
