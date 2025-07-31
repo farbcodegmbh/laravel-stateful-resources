@@ -2,6 +2,7 @@
 
 namespace Farbcode\StatefulResources\Concerns;
 
+use Farbcode\StatefulResources\ActiveState;
 use Farbcode\StatefulResources\Contracts\ResourceState;
 use Farbcode\StatefulResources\StateRegistry;
 use Illuminate\Support\Str;
@@ -45,5 +46,25 @@ trait ResolvesState
         }
 
         return null;
+    }
+
+    /**
+     * Get the active state for the resource.
+     */
+    protected function getActiveState($resourceClass): string
+    {
+        return config()->boolean('stateful-resources.shared_state', false)
+            ? app(ActiveState::class)->getShared()
+            : app(ActiveState::class)->getForResource($resourceClass);
+    }
+
+    /**
+     * Set the active state for the resource.
+     */
+    protected function setActiveState(string $resourceClass, string $state): void
+    {
+        config()->boolean('stateful-resources.shared_state', false)
+            ? app(ActiveState::class)->setShared($state)
+            : app(ActiveState::class)->setForResource($resourceClass, $state);
     }
 }

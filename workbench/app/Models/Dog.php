@@ -9,13 +9,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $name
  * @property string $breed
- * @property string $fluffyness
- * @property string $color
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  */
-class Cat extends Model
+class Dog extends Model
 {
+    /** @use HasFactory<\Database\Factories\DogFactory> */
     use HasFactory;
 
     /**
@@ -23,10 +22,5 @@ class Cat extends Model
      *
      * @var array<string>
      */
-    protected $fillable = ['name', 'breed', 'fluffyness', 'color'];
-
-    public function enemies()
-    {
-        return $this->belongsToMany(Dog::class, 'cats_dogs');
-    }
+    protected $fillable = ['name', 'breed'];
 }

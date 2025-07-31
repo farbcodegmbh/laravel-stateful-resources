@@ -43,7 +43,8 @@ export default defineConfig({
             {
                 text: 'Advanced Usage',
                 items: [
-                    { text: 'Extending States', link: '/extending-states' }
+                    { text: 'Extending States', link: '/extending-states' },
+                    { text: 'State Sharing', link: '/state-sharing' },
                 ]
             }
         ],
