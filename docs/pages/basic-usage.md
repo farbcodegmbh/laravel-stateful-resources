@@ -65,7 +65,7 @@ class UserResource extends StatefulJsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->whenState(State::Full, $this->email),
-            'profile' => $this->whenStateIn([State::Full], [
+            'profile' => $this->whenStateIn([State::Full], fn () => [
                 'bio' => $this->bio,
                 'avatar' => $this->avatar,
                 'created_at' => $this->created_at,
@@ -95,6 +95,41 @@ You can also use magic methods with for cleaner syntax:
 ```
 
 For a full list of available conditional methods, see the [Available Conditional Methods](reference/conditional-methods.md) reference.
+
+### Performance Considerations
+
+Please be aware that heavily relying on conditional methods can lead to performance implications depending on how they are utilized within your resources.
+
+During the execution of `toArray`, all _directly accessed_ model attributes, model accessors and function calls **will be computed, no matter the current state of the given Stateful Resource**.
+
+Here's an example of a Stateful Resource that may compute more than is needed when the state is `Minimal`:
+
+```php
+public function toArray(): array
+{
+    return [
+        'email' => $this->email,
+        'phone' => $this->phone,
+        'address' => $this->unlessStateMinimal($this->address), // ⚠️ `$this->address` will always be computed although its value may not be used
+    ];
+}
+```
+
+The impact for smaller resources is _minimal_, as the overhead of computing unused attributes is negligible. However, for large resources with many attributes, this may lead to performance issues.
+
+But there is a way to circumvent this issue by wrapping the attribute content in a closure:
+
+```php
+public function toArray(): array
+{
+    return [
+        'email' => $this->email,
+        'phone' => $this->phone,
+        'address' => $this->unlessStateMinimal($this->address), // [!code --]
+        'address' => $this->unlessStateMinimal(fn () => $this->address), // ✅ `$this->address` won't be computed unless the condition is met [!code ++]
+    ];
+}
+```
 
 ### Manual State Access
 
