@@ -117,7 +117,7 @@ public function toArray(): array
 
 The impact for smaller resources is _minimal_, as the overhead of computing unused attributes is negligible. However, for large resources with many attributes, this may lead to performance issues.
 
-But there is a way to circumvent this issue by wrapping the attribute content in a closure:
+But there is a way to circumvent this limitation by wrapping the value in a closure:
 
 ```php
 public function toArray(): array
