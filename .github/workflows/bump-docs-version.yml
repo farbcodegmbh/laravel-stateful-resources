@@ -40,7 +40,7 @@ jobs:
           echo "Updated docs/package.json to version ${{ steps.extract_version.outputs.version }}"
 
       - name: Commit updated package.json
-        uses: stefanzweifel/git-auto-commit-action@v6
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           branch: main
           commit_message: "chore(docs): bump version to ${{ steps.extract_version.outputs.version }}"
