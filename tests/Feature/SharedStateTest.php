@@ -201,3 +201,16 @@ it('sets the shared state at the correct time when the builder is used', functio
 
     expect(ActiveState::getShared())->toBe('table');
 });
+
+it('resets the active state between requests', function () {
+    $cat = Cat::factory()->new()->createOne();
+
+    CatResource::state('table')->make($cat);
+
+    expect(ActiveState::getShared())->toBe('table');
+
+    simulateNewOctaneRequest();
+
+    expect(ActiveState::getShared())->toBe(app(StateRegistry::class)->getDefaultState());
+    expect(ActiveState::getForResource(CatResource::class))->toBe(app(StateRegistry::class)->getDefaultState());
+});

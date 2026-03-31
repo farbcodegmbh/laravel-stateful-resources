@@ -25,22 +25,22 @@ class StatefulResourcesServiceProvider extends PackageServiceProvider
 
     public function bootingPackage(): void
     {
-        $states = config()->array('stateful-resources.states');
+        $states = config()->collection('stateful-resources.states');
 
         $this->app->singleton(StateRegistry::class, function () use ($states) {
             $registry = new StateRegistry;
 
-            foreach ($states as $state) {
+            $states->each(function (string|ResourceState $state) use ($registry) {
                 if ($state instanceof ResourceState) {
                     $state = $state->value;
                 }
                 $registry->register($state);
-            }
+            });
 
             return $registry;
         });
 
-        $this->app->singleton(ActiveState::class, function () {
+        $this->app->scoped(ActiveState::class, function () {
             return new ActiveState;
         });
     }

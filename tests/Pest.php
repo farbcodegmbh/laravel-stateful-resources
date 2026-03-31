@@ -1,8 +1,20 @@
 <?php
 
 use Farbcode\StatefulResources\Tests\TestCase;
+use Illuminate\Support\Facades\Facade;
 
 uses(TestCase::class)->in(__DIR__);
+
+/*
+|--------------------------------------------------------------------------
+| Utility Functions
+|--------------------------------------------------------------------------
+*/
+function simulateNewOctaneRequest(): void
+{
+    app()->forgetScopedInstances();
+    Facade::clearResolvedInstances();
+}
 
 /*
 |--------------------------------------------------------------------------
