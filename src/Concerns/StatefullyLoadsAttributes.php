@@ -4,9 +4,11 @@ namespace Farbcode\StatefulResources\Concerns;
 
 use Farbcode\StatefulResources\Contracts\ResourceState;
 use Illuminate\Http\Resources\ConditionallyLoadsAttributes;
+use Illuminate\Http\Resources\MergeValue;
+use Illuminate\Http\Resources\MissingValue;
 
 /**
- * @see \Illuminate\Http\Resources\ConditionallyLoadsAttributes
+ * @see ConditionallyLoadsAttributes
  */
 trait StatefullyLoadsAttributes
 {
@@ -18,7 +20,7 @@ trait StatefullyLoadsAttributes
      * @param  string|ResourceState  $state
      * @param  mixed  $value
      * @param  mixed  $default
-     * @return \Illuminate\Http\Resources\MissingValue|mixed
+     * @return MissingValue|mixed
      */
     protected function whenState($state, $value, $default = null)
     {
@@ -37,7 +39,7 @@ trait StatefullyLoadsAttributes
      * @param  string|ResourceState  $state
      * @param  mixed  $value
      * @param  mixed  $default
-     * @return \Illuminate\Http\Resources\MissingValue|mixed
+     * @return MissingValue|mixed
      */
     protected function unlessState($state, $value, $default = null)
     {
@@ -56,7 +58,7 @@ trait StatefullyLoadsAttributes
      * @param  array<string|ResourceState>  $states
      * @param  mixed  $value
      * @param  mixed  $default
-     * @return \Illuminate\Http\Resources\MissingValue|mixed
+     * @return MissingValue|mixed
      */
     protected function whenStateIn(array $states, $value, $default = null)
     {
@@ -77,7 +79,7 @@ trait StatefullyLoadsAttributes
      * @param  array<string|ResourceState>  $states
      * @param  mixed  $value
      * @param  mixed  $default
-     * @return \Illuminate\Http\Resources\MissingValue|mixed
+     * @return MissingValue|mixed
      */
     protected function unlessStateIn(array $states, $value, $default = null)
     {
@@ -98,7 +100,7 @@ trait StatefullyLoadsAttributes
      * @param  string|ResourceState  $state
      * @param  mixed  $value
      * @param  mixed  $default
-     * @return \Illuminate\Http\Resources\MergeValue|mixed
+     * @return MergeValue|mixed
      */
     protected function mergeWhenState($state, $value, $default = null)
     {
@@ -117,7 +119,7 @@ trait StatefullyLoadsAttributes
      * @param  string|ResourceState  $state
      * @param  mixed  $value
      * @param  mixed  $default
-     * @return \Illuminate\Http\Resources\MergeValue|mixed
+     * @return MergeValue|mixed
      */
     protected function mergeUnlessState($state, $value, $default = null)
     {
@@ -136,7 +138,7 @@ trait StatefullyLoadsAttributes
      * @param  array<string|ResourceState>  $states
      * @param  mixed  $value
      * @param  mixed  $default
-     * @return \Illuminate\Http\Resources\MergeValue|mixed
+     * @return MergeValue|mixed
      */
     protected function mergeWhenStateIn(array $states, $value, $default = null)
     {
@@ -157,7 +159,7 @@ trait StatefullyLoadsAttributes
      * @param  array<string|ResourceState>  $states
      * @param  mixed  $value
      * @param  mixed  $default
-     * @return \Illuminate\Http\Resources\MergeValue|mixed
+     * @return MergeValue|mixed
      */
     protected function mergeUnlessStateIn(array $states, $value, $default = null)
     {
