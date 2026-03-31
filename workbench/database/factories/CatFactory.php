@@ -8,7 +8,7 @@ use Workbench\App\Models\Cat;
 /**
  * @template TModel of \Workbench\App\Models\Cat
  *
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<TModel>
+ * @extends Factory<TModel>
  */
 class CatFactory extends Factory
 {

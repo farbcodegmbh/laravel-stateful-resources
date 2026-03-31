@@ -4,6 +4,7 @@ namespace Farbcode\StatefulResources\Tests;
 
 use Farbcode\StatefulResources\Enums\State;
 use Farbcode\StatefulResources\StatefulResourcesServiceProvider;
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -39,7 +40,7 @@ class TestCase extends Orchestra
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      * @return void
      */
     protected function defineEnvironment($app)

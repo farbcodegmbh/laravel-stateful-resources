@@ -45,7 +45,7 @@ abstract class StatefulJsonResource extends JsonResource
      *
      * @param  string  $method
      * @param  array  $parameters
-     * @return \Farbcode\StatefulResources\Builder
+     * @return Builder
      *
      * @throws \BadMethodCallException
      */
