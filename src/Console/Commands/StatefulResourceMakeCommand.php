@@ -2,11 +2,12 @@
 
 namespace Farbcode\StatefulResources\Console\Commands;
 
+use Illuminate\Console\GeneratorCommand;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputOption;
 
 #[AsCommand(name: 'make:stateful-resource')]
-class StatefulResourceMakeCommand extends \Illuminate\Console\GeneratorCommand
+class StatefulResourceMakeCommand extends GeneratorCommand
 {
     /**
      * The console command name.

@@ -8,7 +8,7 @@ use Workbench\App\Models\Dog;
 /**
  * @template TModel of \Workbench\App\Models\Dog
  *
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<TModel>
+ * @extends Factory<TModel>
  */
 class DogFactory extends Factory
 {
